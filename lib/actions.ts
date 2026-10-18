@@ -3,6 +3,7 @@ import { supabase, configured } from "./supabase";
 import { requireUser, requireAdmin } from "./queries";
 import { bookingSchema, statuses } from "./validation";
 import { safeNext } from "./utils";
+import { loginError } from "./auth-errors";
 import { z } from "zod";
 import { unstable_rethrow } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -64,7 +65,7 @@ export async function authenticate(
           };
     }
     const { error } = await db.auth.signInWithPassword({ email, password });
-    if (error) return { error: "Email atau kata sandi tidak sesuai." };
+    if (error) return { error: loginError(error) };
     return { redirect: next };
   } catch (e) {
     return fail(e);
