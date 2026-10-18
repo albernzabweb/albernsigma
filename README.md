@@ -1,4 +1,4 @@
-# Albencam
+# ALNUDIV
 
 Platform sewa elektronik berbahasa Indonesia, tema biru–putih terang dengan gradasi. Next.js App Router, TypeScript, Tailwind, komponen UI berbasis pola shadcn/Radix, Motion, React Three Fiber/Drei, Supabase Auth/Postgres/Storage, Zod, React Hook Form, Lucide, dan Sonner.
 
@@ -111,7 +111,7 @@ Audit runtime: tidak ditemukan kerentanan saat pemeriksaan. Audit lengkap melapo
 
 ## Deploy ke Vercel
 
-Pilih atau buat proyek **Albencam** pada akun/team yang benar. Hubungkan folder ini sebagai root project, framework Next.js, Node.js 24, build `npm run build`, install `npm ci`, output default. Tidak memerlukan rewrite SPA atau konfigurasi edge runtime.
+Pilih atau buat proyek **ALNUDIV** pada akun/team yang benar. Hubungkan folder ini sebagai root project, framework Next.js, Node.js 24, build `npm run build`, install `npm ci`, output default. Tidak memerlukan rewrite SPA atau konfigurasi edge runtime.
 
 Tambahkan tiga environment variable yang sama di Vercel untuk lingkungan yang digunakan. `NEXT_PUBLIC_SITE_URL` harus cocok dengan URL deployment; masukkan URL callback ke Supabase Auth. Pull environment hanya setelah proyek yang benar terhubung.
 

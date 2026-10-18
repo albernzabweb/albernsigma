@@ -1,4 +1,4 @@
--- Albencam: apply once using Supabase migrations / SQL Editor as database owner.
+-- ALNUDIV: apply once using Supabase migrations / SQL Editor as database owner.
 begin;
 create table public.profiles (
  id uuid primary key references auth.users(id) on delete cascade,

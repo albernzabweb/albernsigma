@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { PageHeading } from "@/components/page-heading";
 import { Button } from "@/components/ui/button";
-export const metadata = { title: "Tentang Albencam" };
+export const metadata = { title: "Tentang ALNUDIV" };
 export default function Page() {
   return (
     <>
       <PageHeading
-        eyebrow="TENTANG ALBENCAM"
+        eyebrow="TENTANG ALNUDIV"
         title="Ide besar pantas dapat kesempatan."
         description="Kami percaya akses ke teknologi seharusnya membuka pintu, bukan menjadi batas."
       />
@@ -14,7 +14,7 @@ export default function Page() {
         <span className="eyebrow">SEWA TEKNOLOGI, TANPA RIBET.</span>
         <h2>Lebih dekat dengan alat yang kamu butuhkan.</h2>
         <p>
-          Albencam adalah konsep platform penyewaan elektronik untuk kreator,
+          ALNUDIV adalah konsep platform penyewaan elektronik untuk kreator,
           mahasiswa, profesional, dan siapa pun yang ingin mencoba hal baru.
           Kamera untuk film pertama, laptop untuk proyek penting, atau konsol
           untuk akhir pekan bersama teman.

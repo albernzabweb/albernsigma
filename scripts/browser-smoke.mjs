@@ -21,8 +21,8 @@ for (
 }
 await page.evaluate(() => window.scrollTo(0, 0));
 await page.waitForTimeout(1000);
-await page.screenshot({ path: "../albencam-desktop.png", fullPage: true });
-await page.screenshot({ path: "../albencam-preview.png" });
+await page.screenshot({ path: "../ALNUDIV-desktop.png", fullPage: true });
+await page.screenshot({ path: "../ALNUDIV-preview.png" });
 assert.equal(await page.locator("h1").count(), 1);
 await page.goto(base + "/catalog", { waitUntil: "networkidle" });
 assert.equal(await page.locator(".product-card").count(), 18);
@@ -115,7 +115,7 @@ for (
 }
 await page.evaluate(() => window.scrollTo(0, 0));
 await page.waitForTimeout(700);
-await page.screenshot({ path: "../albencam-mobile.png", fullPage: true });
+await page.screenshot({ path: "../ALNUDIV-mobile.png", fullPage: true });
 await page.emulateMedia({ reducedMotion: "reduce" });
 await page.goto(base + "/faq");
 await page.getByRole("button", { name: "Apakah ada deposit jaminan?" }).focus();

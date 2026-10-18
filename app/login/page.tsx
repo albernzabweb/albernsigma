@@ -12,7 +12,7 @@ export default async function Page({
   return (
     <div className="container auth-wrap">
       <div className="auth-story">
-        <span className="eyebrow">WELCOME TO ALBENCAM</span>
+        <span className="eyebrow">WELCOME TO ALNUDIV</span>
         <h1>
           Ide berikutnya
           <br />

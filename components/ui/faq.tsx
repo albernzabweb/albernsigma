@@ -3,7 +3,7 @@ import * as A from "@radix-ui/react-accordion";
 import { Plus } from "lucide-react";
 export const faqs = [
   [
-    "Bagaimana cara menyewa di Albencam?",
+    "Bagaimana cara menyewa di ALNUDIV?",
     "Pilih alat di katalog, tentukan tanggal sewa, lalu masuk dan isi data pemesanan. Tinjau rincian biaya dan selesaikan simulasi pembayaran. Status pesanan dapat dilihat di dashboard.",
   ],
   [

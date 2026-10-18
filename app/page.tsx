@@ -203,7 +203,7 @@ export default async function Home() {
           <p>Punya akses ke teknologi terbaik, tanpa harus memilikinya.</p>
           <Button variant="outline" asChild>
             <Link href="/about">
-              Kenali Albencam <ArrowUpRight size={17} />
+              Kenali ALNUDIV <ArrowUpRight size={17} />
             </Link>
           </Button>
         </Reveal>

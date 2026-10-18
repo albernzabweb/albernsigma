@@ -14,7 +14,7 @@ export default async function Page({
   return (
     <>
       <PageHeading
-        eyebrow="KOLEKSI ALBENCAM"
+        eyebrow="KOLEKSI ALNUDIV"
         title={c.name}
         description={c.description + " Harga ilustratif untuk demonstrasi."}
       />

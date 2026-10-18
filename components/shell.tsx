@@ -13,11 +13,11 @@ import {
 import { Button } from "./ui/button";
 export function Brand() {
   return (
-    <Link className="brand" href="/" aria-label="Albencam beranda">
+    <Link className="brand" href="/" aria-label="ALNUDIV beranda">
       <span className="brand-mark">
         <Aperture size={23} />
       </span>
-      albencam<span className="brand-dot">.</span>
+      ALNUDIV<span className="brand-dot">.</span>
     </Link>
   );
 }
@@ -112,7 +112,7 @@ export function Footer() {
           <Link href="/categories/laptop-komputer">Laptop & Komputer</Link>
         </div>
         <div>
-          <h4>Albencam</h4>
+          <h4>ALNUDIV</h4>
           <Link href="/about">Tentang Kami</Link>
           <Link href="/how-it-works">Cara Sewa</Link>
           <Link href="/faq">Pertanyaan Umum</Link>
@@ -133,7 +133,7 @@ export function Footer() {
       </div>
       <div className="container footer-bottom">
         <span>
-          © {new Date().getFullYear()} Albencam. Dibuat untuk ide besarmu.
+          © {new Date().getFullYear()} ALNUDIV. Dibuat untuk ide besarmu.
         </span>
         <span>MODE DEMO — Tidak Ada Transaksi Nyata</span>
       </div>

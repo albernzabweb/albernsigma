@@ -8,7 +8,7 @@ export default function Page() {
       <PageHeading
         eyebrow="HUBUNGI KAMI"
         title="Setiap ide dimulai dari percakapan."
-        description="Temukan bantuan untuk pesanan dan pertanyaan tentang Albencam."
+        description="Temukan bantuan untuk pesanan dan pertanyaan tentang ALNUDIV."
       />
       <div className="container content-page content-narrow">
         <div className="info-card prose">
@@ -23,7 +23,7 @@ export default function Page() {
           </Button>
           <h3>Informasi layanan</h3>
           <p>
-            Albencam masih merupakan proyek demonstrasi universitas. Kanal
+            ALNUDIV masih merupakan proyek demonstrasi universitas. Kanal
             dukungan, alamat pengambilan, jam operasional, dan cakupan
             pengiriman belum ditetapkan. Situs ini tidak mencantumkan kontak
             atau alamat bisnis fiktif.

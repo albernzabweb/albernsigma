@@ -5,8 +5,8 @@ import { configured } from "@/lib/supabase";
 import "./globals.css";
 export const metadata: Metadata = {
   title: {
-    default: "Albencam — Sewa Teknologi, Tanpa Ribet.",
-    template: "%s | Albencam",
+    default: "ALNUDIV — Sewa Teknologi, Tanpa Ribet.",
+    template: "%s | ALNUDIV",
   },
   description:
     "Sewa kamera, laptop, drone, konsol game, dan perlengkapan event. Alat premium untuk setiap ide besarmu.",

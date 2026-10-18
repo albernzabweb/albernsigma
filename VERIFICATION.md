@@ -1,4 +1,4 @@
-# Hasil verifikasi Albencam
+# Hasil verifikasi ALNUDIV
 
 - TypeScript: lulus.
 - ESLint: lulus tanpa error/warning.

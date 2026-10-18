@@ -13,7 +13,7 @@ export default async function Page() {
     <>
       <div className="dash-heading">
         <div>
-          <h1>Ruang kendali Albencam.</h1>
+          <h1>Ruang kendali ALNUDIV.</h1>
           <p>
             Data dari pesanan demo tersimpan. Pendapatan hanya subtotal sewa,
             tanpa deposit.
