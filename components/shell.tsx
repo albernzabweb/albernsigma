@@ -64,8 +64,8 @@ export function Header({ account }: {
             ))}
           </nav>
           <div className="nav-actions">
-            <Link className="login-link" href="/dashboard/bookings">
-              Pesanan Saya
+            <Link className="login-link" href={account?.role === "admin" ? "/admin/bookings" : "/dashboard/bookings"}>
+              {account?.role === "admin" ? "Semua Pesanan" : "Pesanan Saya"}
             </Link>
             {account ? (
               <>
@@ -102,7 +102,7 @@ export function Header({ account }: {
           <nav className="mobile-nav" aria-label="Navigasi seluler">
             {[
               ...links,
-              ["/dashboard/bookings", "Pesanan Saya"],
+              [account?.role === "admin" ? "/admin/bookings" : "/dashboard/bookings", account?.role === "admin" ? "Semua Pesanan" : "Pesanan Saya"],
               ...(account
                 ? [[account.role === "admin" ? "/admin" : "/dashboard", account.role === "admin" ? "Panel Admin" : "Akun Saya"]]
                 : [["/login", "Masuk"], ["/register", "Daftar Akun Customer"]]),

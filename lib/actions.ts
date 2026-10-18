@@ -79,7 +79,7 @@ export async function authenticate(
           "Cek inbox dan folder spam untuk tautan konfirmasi. Akun customer aktif otomatis setelah email dikonfirmasi.",
       };
     }
-    const { error } = await db.auth.signInWithPassword({ email, password });
+    const { data, error } = await db.auth.signInWithPassword({ email, password });
     if (error)
       return {
         error: loginError(error),
@@ -87,6 +87,10 @@ export async function authenticate(
         email,
       };
     revalidatePath("/", "layout");
+    if (next === "/dashboard" && data.user) {
+      const { data: profile } = await db.from("profiles").select("role").eq("id", data.user.id).single();
+      if (profile?.role === "admin") return { redirect: "/admin" };
+    }
     return { redirect: next };
   } catch (e) {
     return fail(e);
