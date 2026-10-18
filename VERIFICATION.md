@@ -3,7 +3,7 @@
 - TypeScript: lulus.
 - ESLint: lulus tanpa error/warning.
 - Build produksi Next.js: lulus; seluruh rute App Router berhasil dikompilasi.
-- Tes otomatis: 19 lulus, 0 gagal. Termasuk PL/pgSQL, RLS, role escalation, harga server, hold, stok, pembayaran idempotent, dan status admin.
+- Tes otomatis: 23 lulus, 0 gagal. Termasuk PL/pgSQL, RLS, role escalation, harga server, hold, stok, pembayaran idempotent, status admin, setup ulang tanpa perubahan data, dan penolakan struktur/policy yang tidak cocok.
 - Browser Microsoft Edge: 17 kelompok pemeriksaan lulus, tanpa error JavaScript. Katalog 18 produk, filter kategori, pencarian, empty state, harga inklusif, ongkir, carry tanggal ke login, rute publik/privat, not-found, menu mobile, overflow, FAQ, reduced motion, fallback WebGL, dan kegagalan gambar.
 - Preview desktop 1440 px dan mobile 390 px telah diperiksa secara visual.
 - Audit dependensi runtime: 0 temuan. Lima temuan development-only pada rantai lint didokumentasikan di README.

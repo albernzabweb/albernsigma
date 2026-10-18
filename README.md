@@ -34,7 +34,7 @@ Buka alamat yang dicetak server. `npm run dev` tersedia untuk pengembangan setel
    - `NEXT_PUBLIC_SUPABASE_URL`: Project URL.
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: anon/public client key; bukan service-role key.
    - `NEXT_PUBLIC_SITE_URL`: origin aplikasi tanpa trailing slash; gunakan origin preview/produksi yang benar. Untuk pengembangan lokal, gunakan origin lokal servermu.
-3. Jalankan seluruh `supabase/migrations/202610180001_initial.sql` melalui SQL Editor sebagai pemilik database. Gunakan proyek kosong: migrasi awal memang bukan skrip pengulangan/drop schema.
+3. Jalankan seluruh `supabase/migrations/202610180001_initial.sql` melalui SQL Editor sebagai pemilik database. Setup dapat dijalankan ulang pada struktur ALNUDIV yang cocok. Tabel, data, akun, dan peran yang sudah ada dipertahankan. Struktur tabel atau kebijakan akses yang tidak sesuai akan dihentikan sebelum perubahan; jangan menghapus tabel untuk melewati pemeriksaan ini.
 4. Jalankan `supabase/seed.sql`. Seed dapat diulang dan tidak menimpa produk/inventori yang sudah ada.
 5. Aktifkan Email/Password di Supabase Auth. Atur Site URL sesuai origin aplikasi. Tambahkan URL redirect tepat `ORIGIN/auth/callback` untuk pengembangan dan produksi. Email confirmation didukung; akun yang belum dikonfirmasi tidak dilewati secara diam-diam.
 6. Bucket publik `product-images` dan kebijakan akses dibuat oleh migrasi. Unggahan hanya admin, JPG/PNG/WebP, maksimal 5 MB. SVG lokal adalah ilustrasi bawaan dan tidak diunggah dari pengguna.
@@ -123,3 +123,7 @@ npx vercel deploy
 ```
 
 Jangan menjalankan migrasi terhadap proyek yang sudah berisi data tanpa meninjau perubahan. Jangan menaruh `.env.local`, token Vercel, atau service-role key di Git/ZIP. Arsip penyerahan tidak menyertakan node_modules, .next, .vercel, atau environment rahasia.
+
+## Jika muncul `relation "profiles" already exists`
+
+File setup terbaru dapat dijalankan ulang. Buka kembali `supabase/migrations/202610180001_initial.sql` dari branch main, klik Raw, salin seluruh isi terbaru ke query baru di Supabase SQL Editor, lalu Run. Jangan menjalankan salinan lama yang masih terbuka di tab editor. Setelah setup berhasil, jalankan `supabase/seed.sql`. Keduanya mempertahankan data yang sudah ada. Jika pesan berubah menjadi struktur tabel tidak cocok, ambil hasil `supabase/diagnose.sql` untuk meninjau kolom/kebijakan yang sudah ada.
