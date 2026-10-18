@@ -69,10 +69,15 @@ export function RefreshBookings() {
   const router = useRouter();
   const [pending, run] = useTransition();
   useEffect(() => {
-    const t = setInterval(() => {
-      if (!document.hidden) router.refresh();
-    }, 20000);
-    return () => clearInterval(t);
+    const refresh = () => { if (!document.hidden) router.refresh(); };
+    const t = setInterval(refresh, 20000);
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      clearInterval(t);
+      window.removeEventListener("focus", refresh);
+      document.removeEventListener("visibilitychange", refresh);
+    };
   }, [router]);
   return (
     <button

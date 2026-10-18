@@ -39,13 +39,9 @@ export async function proxy(request: NextRequest) {
   await db.auth.getUser();
   return response;
 }
+// Every page renders the signed-in header, so refresh its session on public pages too.
 export const config = {
   matcher: [
-    "/dashboard/:path*",
-    "/admin/:path*",
-    "/booking/:path*",
-    "/checkout/:path*",
-    "/login",
-    "/register",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

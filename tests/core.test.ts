@@ -156,6 +156,17 @@ test("PostgreSQL migration, RLS, roles, prices, reservations and simulated payme
       );
     },
   );
+  await t.test("Admin sees another customer's unpaid booking with its product before payment", async () => {
+    await as(admin);
+    const result = await db.query<{ id: string; customer_id: string; payment_status: string; name: string }>(
+      "select b.id,b.customer_id,b.payment_status,p.name from public.bookings b join public.products p on p.id=b.product_id where b.id=$1", [id],
+    );
+    assert.equal(result.rows.length, 1);
+    assert.equal(result.rows[0].customer_id, a);
+    assert.equal(result.rows[0].payment_status, "unpaid");
+    assert.ok(result.rows[0].name);
+    await as(a);
+  });
   await t.test(
     "Confirmed or unexpired reservations consume stock",
     async () => {

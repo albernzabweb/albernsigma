@@ -1,5 +1,6 @@
 import { getBookings, getProducts } from "@/lib/queries";
 import { money } from "@/lib/utils";
+import { RefreshBookings } from "@/components/dashboard-nav";
 import { BookingTable } from "@/components/booking-table";
 export default async function Page() {
   const bs = await getBookings(true);
@@ -19,6 +20,7 @@ export default async function Page() {
             tanpa deposit.
           </p>
         </div>
+        <RefreshBookings />
       </div>
       <div className="metric-grid">
         {[

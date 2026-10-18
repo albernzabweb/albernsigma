@@ -68,7 +68,10 @@ export async function authenticate(
         },
       });
       if (error) return { error: registrationError(error) };
-      if (data.session) return { redirect: destination };
+      if (data.session) {
+        revalidatePath("/", "layout");
+        return { redirect: destination };
+      }
       return {
         requiresConfirmation: true,
         email: input.email,
@@ -83,6 +86,7 @@ export async function authenticate(
         requiresConfirmation: error.code === "email_not_confirmed",
         email,
       };
+    revalidatePath("/", "layout");
     return { redirect: next };
   } catch (e) {
     return fail(e);
@@ -155,7 +159,8 @@ export async function createBooking(form: FormData): Promise<Result> {
       p_notes: d.notes,
     });
     if (error) return { error: error.message };
-    revalidatePath("/dashboard");
+    revalidatePath("/dashboard", "layout");
+    revalidatePath("/admin", "layout");
     return { id: String(data) };
   } catch (e) {
     return fail(e);
@@ -177,6 +182,7 @@ export async function simulatePayment(
     if (error) return { error: error.message };
     revalidatePath("/dashboard", "layout");
     revalidatePath("/checkout/" + id);
+    revalidatePath("/admin", "layout");
     return { id };
   } catch (e) {
     return fail(e);

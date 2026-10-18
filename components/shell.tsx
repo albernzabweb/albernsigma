@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 import {
   Aperture,
   ArrowUpRight,
@@ -10,6 +10,7 @@ import {
   Camera,
   ArrowRight,
 } from "lucide-react";
+import { logout } from "@/lib/actions";
 import { Button } from "./ui/button";
 export function Brand() {
   return (
@@ -27,7 +28,17 @@ const links = [
   ["/about", "Tentang Kami"],
   ["/faq", "FAQ"],
 ];
-export function Header() {
+export function Header({ account }: {
+  account: { role: "admin" | "customer" } | null;
+}) {
+  const router = useRouter();
+  const [pending, run] = useTransition();
+  const signOut = () => run(async () => {
+    await logout();
+    setOpen(false);
+    router.replace("/");
+    router.refresh();
+  });
   const [open, setOpen] = useState(false);
   const path = usePathname();
   return (
@@ -53,9 +64,21 @@ export function Header() {
             ))}
           </nav>
           <div className="nav-actions">
-            <Link className="login-link" href="/dashboard">
+            <Link className="login-link" href="/dashboard/bookings">
               Pesanan Saya
             </Link>
+            {account ? (
+              <>
+                <Button asChild size="sm">
+                  <Link href={account.role === "admin" ? "/admin" : "/dashboard"}>
+                    {account.role === "admin" ? "Panel Admin" : "Akun Saya"} <ArrowUpRight size={16} />
+                  </Link>
+                </Button>
+                <button className="text-button" disabled={pending} onClick={signOut}>
+                  {pending ? "Keluar…" : "Keluar"}
+                </button>
+              </>
+            ) : (<>
             <Link className="login-link" href="/login">
               Masuk
             </Link>
@@ -64,6 +87,7 @@ export function Header() {
                 Daftar Akun <ArrowUpRight size={16} />
               </Link>
             </Button>
+            </>)}
           </div>
           <button
             className="mobile-toggle"
@@ -78,15 +102,17 @@ export function Header() {
           <nav className="mobile-nav" aria-label="Navigasi seluler">
             {[
               ...links,
-              ["/dashboard", "Pesanan Saya"],
-              ["/login", "Masuk"],
-              ["/register", "Daftar Akun Customer"],
+              ["/dashboard/bookings", "Pesanan Saya"],
+              ...(account
+                ? [[account.role === "admin" ? "/admin" : "/dashboard", account.role === "admin" ? "Panel Admin" : "Akun Saya"]]
+                : [["/login", "Masuk"], ["/register", "Daftar Akun Customer"]]),
             ].map(([url, text]) => (
               <Link key={url} href={url} onClick={() => setOpen(false)}>
                 {text}
                 <ArrowUpRight size={16} />
               </Link>
             ))}
+            {account && <button className="text-button" disabled={pending} onClick={signOut}>{pending ? "Keluar…" : "Keluar"}</button>}
           </nav>
         )}
       </header>
