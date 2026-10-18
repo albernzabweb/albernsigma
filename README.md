@@ -127,3 +127,9 @@ Jangan menjalankan migrasi terhadap proyek yang sudah berisi data tanpa meninjau
 ## Jika muncul `relation "profiles" already exists`
 
 File setup terbaru dapat dijalankan ulang. Buka kembali `supabase/migrations/202610180001_initial.sql` dari branch main, klik Raw, salin seluruh isi terbaru ke query baru di Supabase SQL Editor, lalu Run. Jangan menjalankan salinan lama yang masih terbuka di tab editor. Setelah setup berhasil, jalankan `supabase/seed.sql`. Keduanya mempertahankan data yang sudah ada. Jika pesan berubah menjadi struktur tabel tidak cocok, ambil hasil `supabase/diagnose.sql` untuk meninjau kolom/kebijakan yang sudah ada.
+
+## Pemeriksaan koneksi deployment
+
+`/api/health` memeriksa autentikasi dan query katalog secara read-only. Hasil hanya menampilkan URL proyek publik, status HTTP, kode error, dan jumlah produk; tidak menampilkan API key, session, atau data pelanggan. `status: ready` berarti kedua pemeriksaan berhasil, bukan bukti bahwa password atau peran akun tertentu benar.
+
+Project URL harus berupa origin API Supabase. Untuk menghindari kegagalan jika URL dashboard terlanjur tersimpan, aplikasi menormalisasi tautan resmi `https://supabase.com/dashboard/project/REF` ke `https://REF.supabase.co`. Ubah environment ke URL API yang benar saat memungkinkan. Nama `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` juga didukung selain `NEXT_PUBLIC_SUPABASE_ANON_KEY`; bila keduanya diisi, publishable key diprioritaskan. Secret/service-role key ditolak.
