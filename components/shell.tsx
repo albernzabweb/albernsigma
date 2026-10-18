@@ -56,9 +56,12 @@ export function Header() {
             <Link className="login-link" href="/dashboard">
               Pesanan Saya
             </Link>
+            <Link className="login-link" href="/login">
+              Masuk
+            </Link>
             <Button asChild size="sm">
-              <Link href="/login">
-                Masuk / Daftar <ArrowUpRight size={16} />
+              <Link href="/register">
+                Daftar Akun <ArrowUpRight size={16} />
               </Link>
             </Button>
           </div>
@@ -76,7 +79,8 @@ export function Header() {
             {[
               ...links,
               ["/dashboard", "Pesanan Saya"],
-              ["/login", "Masuk / Daftar"],
+              ["/login", "Masuk"],
+              ["/register", "Daftar Akun Customer"],
             ].map(([url, text]) => (
               <Link key={url} href={url} onClick={() => setOpen(false)}>
                 {text}

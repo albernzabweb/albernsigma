@@ -133,3 +133,13 @@ File setup terbaru dapat dijalankan ulang. Buka kembali `supabase/migrations/202
 `/api/health` memeriksa autentikasi dan query katalog secara read-only. Hasil hanya menampilkan URL proyek publik, status HTTP, kode error, dan jumlah produk; tidak menampilkan API key, session, atau data pelanggan. `status: ready` berarti kedua pemeriksaan berhasil, bukan bukti bahwa password atau peran akun tertentu benar.
 
 Project URL harus berupa origin API Supabase. Untuk menghindari kegagalan jika URL dashboard terlanjur tersimpan, aplikasi menormalisasi tautan resmi `https://supabase.com/dashboard/project/REF` ke `https://REF.supabase.co`. Ubah environment ke URL API yang benar saat memungkinkan. Nama `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` juga didukung selain `NEXT_PUBLIC_SUPABASE_ANON_KEY`; bila keduanya diisi, publishable key diprioritaskan. Secret/service-role key ditolak.
+
+## Customer daftar sendiri
+
+Customer membuka `/register` melalui tombol Daftar Akun, mengisi nama/email/password/konfirmasi password, dan mendaftar sendiri. Aplikasi hanya mengirim metadata nama ke Supabase Auth. Trigger `handle_new_user` yang sudah terpasang membuat profil dan menetapkan role `customer` otomatis. Tidak diperlukan pembuatan user, pengisian profil, atau persetujuan admin per customer.
+
+Jika proyek Supabase menerbitkan session langsung, customer langsung diarahkan ke dashboard atau booking yang sedang dikerjakan. Jika Confirm Email aktif, customer mendapat layar panduan konfirmasi dan tombol kirim ulang; setelah mengklik tautan email, callback membuat sesi dan meneruskan tujuan sewa. Tidak ada auto-promotion atau service-role key dalam pendaftaran.
+
+Pengaturan layanan sekali saja: Enable new user signups dan provider Email harus aktif di Supabase. Jika konfirmasi email dipakai untuk customer umum, siapkan SMTP sendiri; email bawaan Supabase dibatasi untuk anggota tim proyek. Ini konfigurasi layanan, bukan pengaturan akun satu per satu. Aplikasi mengikuti kebijakan konfirmasi proyek dan tidak melewatinya. `/api/health` menampilkan `auth.signupEnabled` dan `auth.emailConfirmationRequired` tanpa menampilkan key atau akun pengguna.
+
+Tes pendaftaran dengan mengirim email sungguhan hanya dilakukan setelah alamat uji diizinkan pemiliknya. Tes lokal memeriksa validasi, callback, batas peran, dan profil otomatis tanpa mengirim email.

@@ -16,7 +16,6 @@ import {
   statuses,
 } from "@/lib/validation";
 import {
-  authenticate,
   checkAvailability,
   createBooking,
   simulatePayment,
@@ -209,115 +208,6 @@ export function Gallery({ product: p }: { product: Product }) {
         ))}
       </div>
     </>
-  );
-}
-export function AuthForm({
-  register = false,
-  next = "/dashboard",
-  configured = true,
-}: {
-  register?: boolean;
-  next?: string;
-  configured?: boolean;
-}) {
-  const [pending, run] = useTransition();
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
-  const router = useRouter();
-  return (
-    <form
-      className="auth-form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        const f = new FormData(e.currentTarget);
-        f.set("next", next);
-        run(async () => {
-          setError("");
-          const r = await authenticate(f, register);
-          if (r.error) setError(r.error);
-          if (r.message) setMessage(r.message);
-          if (r.redirect) {
-            router.push(r.redirect);
-            router.refresh();
-          }
-        });
-      }}
-    >
-      <h2>{register ? "Mulai cerita barumu." : "Senang kamu kembali."}</h2>
-      <p>
-        {register
-          ? "Satu akun untuk semua rencana besarmu."
-          : "Masuk untuk melanjutkan rencana dan pesananmu."}
-      </p>
-      {!configured && (
-        <div className="alert">
-          Koneksi Supabase belum diatur. Akun dan pemesanan akan aktif setelah
-          setup selesai.
-        </div>
-      )}
-      {register && (
-        <Field label="Nama lengkap" id="name">
-          <input
-            id="name"
-            name="name"
-            required
-            minLength={2}
-            maxLength={100}
-            autoComplete="name"
-            placeholder="Nama kamu"
-          />
-        </Field>
-      )}
-      <Field label="Alamat email" id="email">
-        <input
-          id="email"
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          placeholder="kamu@contoh.com"
-        />
-      </Field>
-      <Field label="Kata sandi" id="password">
-        <input
-          id="password"
-          name="password"
-          type="password"
-          required
-          minLength={8}
-          maxLength={128}
-          autoComplete={register ? "new-password" : "current-password"}
-          placeholder="Minimal 8 karakter"
-        />
-      </Field>
-      {error && (
-        <div className="alert error" role="alert">
-          {error}
-        </div>
-      )}
-      {message && (
-        <div className="alert success" role="status">
-          {message}
-        </div>
-      )}
-      <Button
-        type="submit"
-        className="full-width"
-        disabled={pending || !configured}
-      >
-        {pending ? "Sebentar…" : register ? "Buat Akun" : "Masuk"}
-        <ArrowUpRight size={17} />
-      </Button>
-      <p className="auth-switch">
-        {register ? "Sudah punya akun? " : "Belum punya akun? "}
-        <Link
-          href={`${register ? "/login" : "/register"}?next=${encodeURIComponent(next)}`}
-        >
-          {register ? "Masuk di sini" : "Daftar sekarang"}
-        </Link>
-      </p>
-      <p className="note center">MODE DEMO — Tidak Ada Transaksi Nyata</p>
-    </form>
   );
 }
 export function BookingForm({

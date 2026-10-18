@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AuthForm } from "@/components/forms";
+import { AuthForm } from "@/components/auth-form";
 import { configured } from "@/lib/supabase";
 import { safeNext } from "@/lib/utils";
 export const metadata = { title: "Masuk" };
@@ -30,8 +30,8 @@ export default async function Page({
       <div>
         {q.error && (
           <div className="alert error">
-            Tautan konfirmasi tidak valid atau kedaluwarsa. Silakan masuk atau
-            ulangi pendaftaran.
+            Tautan konfirmasi tidak valid atau kedaluwarsa. Masuk dengan emailmu
+            untuk meminta tautan konfirmasi yang baru.
           </div>
         )}
         <AuthForm next={safeNext(q.next)} configured={configured()} />

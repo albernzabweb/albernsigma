@@ -27,7 +27,8 @@ export function safeNext(v: unknown) {
   return typeof v === "string" &&
     v.startsWith("/") &&
     !v.startsWith("//") &&
-    !v.includes("\\")
+    !v.includes("\\") &&
+    !Array.from(v).some((c) => c.charCodeAt(0) <= 32 || c.charCodeAt(0) === 127)
     ? v
     : "/dashboard";
 }

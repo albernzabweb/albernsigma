@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AuthForm } from "@/components/forms";
+import { AuthForm } from "@/components/auth-form";
 import { configured } from "@/lib/supabase";
 import { safeNext } from "@/lib/utils";
 export const metadata = { title: "Buat Akun" };

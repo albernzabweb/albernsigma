@@ -4,6 +4,12 @@ import { requireUser, requireAdmin } from "./queries";
 import { bookingSchema, statuses } from "./validation";
 import { safeNext } from "./utils";
 import { loginError } from "./auth-errors";
+import {
+  registrationSchema,
+  customerNext,
+  confirmationUrl,
+  registrationError,
+} from "./customer-registration";
 import { z } from "zod";
 import { unstable_rethrow } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -12,6 +18,8 @@ export type Result = {
   id?: string;
   message?: string;
   redirect?: string;
+  requiresConfirmation?: boolean;
+  email?: string;
 };
 function fail(e: unknown): Result {
   unstable_rethrow(e);
@@ -27,7 +35,12 @@ export async function authenticate(
   register: boolean,
 ): Promise<Result> {
   try {
-    const email = z.email().parse(form.get("email"));
+    const email = z
+      .string()
+      .trim()
+      .toLowerCase()
+      .pipe(z.email())
+      .parse(form.get("email"));
     const password = z
       .string()
       .min(8, "Kata sandi minimal 8 karakter")
@@ -41,32 +54,64 @@ export async function authenticate(
       };
     const db = await supabase();
     if (register) {
-      const name = z.string().trim().min(2).max(100).parse(form.get("name"));
-      const origin = process.env.NEXT_PUBLIC_SITE_URL;
-      if (!origin)
-        return {
-          error: "Alamat situs belum dikonfigurasi. Isi NEXT_PUBLIC_SITE_URL.",
-        };
+      const input = registrationSchema.parse(Object.fromEntries(form));
+      const destination = customerNext(next);
       const { data, error } = await db.auth.signUp({
-        email,
-        password,
+        email: input.email,
+        password: input.password,
         options: {
-          data: { name },
-          emailRedirectTo:
-            origin + "/auth/callback?next=" + encodeURIComponent(next),
+          data: { name: input.name },
+          emailRedirectTo: confirmationUrl(
+            process.env.NEXT_PUBLIC_SITE_URL,
+            destination,
+          ),
         },
       });
-      if (error) return { error: error.message };
-      return data.session
-        ? { redirect: next }
-        : {
-            message:
-              "Pendaftaran berhasil. Periksa email untuk mengonfirmasi akun, lalu masuk.",
-          };
+      if (error) return { error: registrationError(error) };
+      if (data.session) return { redirect: destination };
+      return {
+        requiresConfirmation: true,
+        email: input.email,
+        message:
+          "Cek inbox dan folder spam untuk tautan konfirmasi. Akun customer aktif otomatis setelah email dikonfirmasi.",
+      };
     }
     const { error } = await db.auth.signInWithPassword({ email, password });
-    if (error) return { error: loginError(error) };
+    if (error)
+      return {
+        error: loginError(error),
+        requiresConfirmation: error.code === "email_not_confirmed",
+        email,
+      };
     return { redirect: next };
+  } catch (e) {
+    return fail(e);
+  }
+}
+export async function resendConfirmation(form: FormData): Promise<Result> {
+  try {
+    const email = z
+      .string()
+      .trim()
+      .toLowerCase()
+      .pipe(z.email())
+      .parse(form.get("email"));
+    const db = await supabase();
+    const { error } = await db.auth.resend({
+      type: "signup",
+      email,
+      options: {
+        emailRedirectTo: confirmationUrl(
+          process.env.NEXT_PUBLIC_SITE_URL,
+          form.get("next"),
+        ),
+      },
+    });
+    if (error) return { error: registrationError(error) };
+    return {
+      message:
+        "Jika akun memerlukan konfirmasi, tautan baru akan dikirim. Periksa inbox dan folder spam.",
+    };
   } catch (e) {
     return fail(e);
   }

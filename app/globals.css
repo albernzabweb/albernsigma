@@ -2656,3 +2656,80 @@ td a {
   color: inherit !important;
   margin: 0 !important;
 }
+.password-input {
+  position: relative;
+}
+.password-input input {
+  padding-right: 45px;
+}
+.password-input button {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px;
+  color: #7183a0;
+}
+.registration-note {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 9px;
+  background: #f0f7ff;
+  border: 1px solid #dcecff;
+  color: #4874ab;
+  font-size: 10px;
+  margin: 0 0 20px;
+}
+.registration-icon {
+  height: 53px;
+  width: 53px;
+  border-radius: 15px;
+  background: #e8f3ff;
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.registration-steps {
+  list-style: none;
+  margin: 22px 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+.registration-steps li {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 11px;
+  color: #64748b;
+}
+.registration-steps span {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #eaf3ff;
+  color: var(--blue);
+  font-size: 10px;
+}
+.auth-form > .button + .button {
+  margin-top: 12px;
+}
+.auth-form > .text-button {
+  margin-top: 20px;
+}
+.auth-form > .eyebrow {
+  margin-bottom: 12px;
+}

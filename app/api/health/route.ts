@@ -31,12 +31,26 @@ export async function GET() {
     );
   }
   const checks = await Promise.allSettled([
-    fetch(config.url + "/auth/v1/health", {
+    fetch(config.url + "/auth/v1/settings", {
       headers: { apikey: config.key },
       signal: AbortSignal.timeout(10000),
       cache: "no-store",
       redirect: "error",
-    }).then(async (r) => ({ ok: r.ok, status: r.status })),
+    }).then(async (r) => {
+      const settings = r.ok ? await r.json().catch(() => null) : null;
+      return {
+        ok: r.ok,
+        status: r.status,
+        signupEnabled:
+          typeof settings?.disable_signup === "boolean"
+            ? !settings.disable_signup && settings.external?.email !== false
+            : null,
+        emailConfirmationRequired:
+          typeof settings?.mailer_autoconfirm === "boolean"
+            ? !settings.mailer_autoconfirm
+            : null,
+      };
+    }),
     createClient(config.url, config.key, {
       auth: { persistSession: false, autoRefreshToken: false },
       global: {
